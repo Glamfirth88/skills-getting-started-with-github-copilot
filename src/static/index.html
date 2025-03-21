@@ -46,5 +46,35 @@
     </footer>
 
     <script src="app.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        fetch("/activities")
+          .then((response) => response.json())
+          .then((activities) => {
+            const activitiesList = document.getElementById("activities-list");
+            activitiesList.innerHTML = ""; // Clear loading message
+            for (const [activityName, activityDetails] of Object.entries(activities)) {
+              const activityCard = document.createElement("div");
+              activityCard.className = "activity-card";
+              activityCard.innerHTML = `
+                <h4>${activityName}</h4>
+                <p>${activityDetails.description}</p>
+                <p><strong>Schedule:</strong> ${activityDetails.schedule}</p>
+                <p><strong>Participants:</strong></p>
+                <ul>
+                  ${
+                    activityDetails.participants.length > 0
+                      ? activityDetails.participants
+                          .map((participant) => `<li>${participant}</li>`)
+                          .join("")
+                      : "<li>No participants yet</li>"
+                  }
+                </ul>
+              `;
+              activitiesList.appendChild(activityCard);
+            }
+          });
+      });
+    </script>
   </body>
 </html>
