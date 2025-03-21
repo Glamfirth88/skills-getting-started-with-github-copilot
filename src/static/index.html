@@ -60,11 +60,16 @@
                 <h4>${activityName}</h4>
                 <p>${activityDetails.description}</p>
                 <p><strong>Schedule:</strong> ${activityDetails.schedule}</p>
-                <p><strong>Participants:</strong> ${
-                  activityDetails.participants.length > 0
-                    ? activityDetails.participants.join(", ")
-                    : "No participants yet"
-                }</p>
+                <p><strong>Participants:</strong></p>
+                <ul>
+                  ${
+                    activityDetails.participants.length > 0
+                      ? activityDetails.participants
+                          .map((participant) => `<li>${participant}</li>`)
+                          .join("")
+                      : "<li>No participants yet</li>"
+                  }
+                </ul>
               `;
               activitiesList.appendChild(activityCard);
             }
